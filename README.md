@@ -18,6 +18,7 @@ There is a simple script writen in PHP to generate PINs to connect a Hotspot, us
 Create a new User Script in the RouterOS with the following (assuming that the Hotspot profile is called "Clients"):
 
 /ip hotspot user remove [find profile=Clients];
+
 /ip hotspot active remove [find];
 
 ## PHP Scripts setup
