@@ -2,7 +2,7 @@
 
 There is a simple script writen in PHP to generate PINs to connect a Hotspot, using RouterOS using the routeros-api by **Denis Basta**: https://github.com/BenMenking/routeros-api/blob/master/routeros_api.class.php
 
-An Appliance with Tiny Core Minux is included as PIN server on OVA format (VMWare) configured with Bridged network device. (You still need your device with RouterOS).
+An Appliance with Tiny Core Linux ready-to-use (after proper configuration) is included on OVA format (VMWare) configured with Bridged network device, as the PIN generator server. (You still need your device with RouterOS).
 
 ## The script consist in two parts
 
@@ -17,7 +17,7 @@ An Appliance with Tiny Core Minux is included as PIN server on OVA format (VMWar
 
 * First, be sure to have connectivity between your manager machine and the device running RouterOS and add a strong password to the RouterOS admin account
 * Create a Hotspot and set at least one profile for the clients (don't forget to set the limits)
-* Edit the HTML files by renaming the **Username** description field as **PIN** and remove the field **Password**
+* Edit the HTML files by renaming the **Username** description field as **PIN** and set the **Password** field as hidden (**don't** remove it!)
 * Test by adding one user without password and connect
 
 ## RouterOS Scripts setup
