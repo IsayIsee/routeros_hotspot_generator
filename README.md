@@ -39,3 +39,8 @@ Everything is available in the Appliance, you just need to edit **index.php** an
  * Set the IP, User and Password of your RouterBoard admin account
  * Set the Hotspot users according to your needs (100 should be enough)
  * Set the Hotspot Server and Profile that you used in the Hotspot setup
+
+#License
+
+* The scripts included in this project are licensed under the BSD 3-Clause License.
+* The Appliance included in appliance/tiny_core uses Tiny Core Linux. The contents are licensed under several licenses, including the GNU General Public License (for Tiny Core Linux and other packages), the PHP License (for PHP5), and other licenses.
