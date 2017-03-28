@@ -26,37 +26,17 @@ An Appliance with Tiny Core Linux ready-to-use (after proper configuration) is i
 
 * Edit the Hotspot HTML files by renaming the **Username** description field as **PIN** and set the **Password** field as hidden (**don't** remove it!)
 
-### PHP Scripts setup
-
-Everything is available in the Appliance, you just need to edit **index.php** and **lib/manage.sh**. If you want to install manually:
-
-* Copy "index.php" to your webserver.
-
-* Copy "lib" anywhere outside the www access and be sure to be writable by the Webserver user, but inaccessible form the web.
-
-* Edit "index.php" and set the "lib" path if necessary. Is highly recommended to set it to the canonicalized absolute path.
-
-* Edit "lib/manage.sh" and:
-
-	* Set the PHP/cli path shebang if necessary
-
-	* Set the IP, User and Password of your RouterBoard admin account
-
-	* Set the Hotspot users according to your needs (the default 1000 is recommended)
-
-	* Set the Hotspot Server and Profile that you used in the Hotspot setup
-
 ### Hotspot setup (using Winbox)
 
 * Go to IP > Hotspot, and,
 
 	* In Server tab, Create a Hotspot using the "Hotspot Setup" wizard. Check for the Profile and select the Profile (found at Server Profiles tab) during the Hotspot Setup.
 
-	* In the User Profile tab, create a new Profile using the Name you defined in the "manage.sh" script, select the Address Pool created during the Hotspot Setup (usually 'hs-pool-6'), set the Rate Limit (in bytes), and set the Session Timeout as you like (usually 00:30:00).
+	* In the User Profile tab, create a new Profile, select the Address Pool created during the Hotspot Setup (usually 'hs-pool-6'), set the Rate Limit (in bytes), and set the Session Timeout as you like (usually 00:30:00).
 
 ### RouterOS Scripts/Schedule setup
 
-* Create the following User scripts from the Terminal:
+* Create the following User scripts from the Terminal (use the profile defined in "manage.sh"):
 
 	* `system script add name=remove-clients source="/ip hotspot user remove [find profile=Clients];"`
 
@@ -70,9 +50,29 @@ Everything is available in the Appliance, you just need to edit **index.php** an
 
 ### Server setup
 
+Everything is available in the Appliance, you just need to edit **index.php** and **lib/manage.sh**. If you want to install manually:
+
+* Copy "index.php" to your webserver.
+
+* Copy "lib" anywhere outside the www access and be sure to be writable by the Webserver user, but inaccessible form the web.
+
+* Edit "index.php" and set the "lib" path if necessary. Is highly recommended to set it to the canonicalized absolute path.
+
+* Edit "lib/manage.sh" and:
+
+	* Set the PHP/cli path shebang if necessary.
+
+	* Set the IP, User and Password for your RouterOS admin account.
+
+	* Set $hotspot_server (string) as the Hotspot name created during the Hotspot Setup (usually 'hotspot1').
+	
+	* Set $hotspot_profile (string) as the name defined during the creation of the User profile (usually 'uprof1').
+	
+	* Set $hotspot_users according (integer) to the ammount of users who will connect during the Working Day (1000 by default)
+
 Once the Router and Server configuration is done, you may set up the Scheduler (cron) to run the script every a certain time.
  
-## License
+#License
 
 * The scripts included in this project are licensed under the BSD 3-Clause License.
 * The Appliance included in appliance/tiny_core uses Tiny Core Linux. The contents are licensed under several licenses, including the GNU General Public License (for Tiny Core Linux and other packages), the PHP License (for PHP5), and other licenses.
