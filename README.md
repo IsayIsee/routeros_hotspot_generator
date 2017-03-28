@@ -30,7 +30,7 @@ An Appliance with Tiny Core Linux ready-to-use (after proper configuration) is i
 
 * Go to IP > Hotspot, and,
 
-	* In Server tab, Create a Hotspot using the "Hotspot Setup" wizard. Check for the Profile and select the Profile (found at Server Profiles tab) during the Hotspot Setup.
+	* In Server tab, Create a Hotspot using the "Hotspot Setup" wizard. Check for the Profile and select the Profile (found at Server Profiles tab) set during the Hotspot Setup.
 
 	* In the User Profile tab, create a new Profile, select the Address Pool created during the Hotspot Setup (usually 'hs-pool-6'), set the Rate Limit (in bytes), and set the Session Timeout as you like (usually 00:30:00).
 
