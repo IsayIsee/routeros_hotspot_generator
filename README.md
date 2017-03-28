@@ -1,6 +1,6 @@
 # The Ultimate standalone Hotspot PIN generator for RouterOS
 
-There is a simple script writen in PHP to generate PINs to connect a Hotspot, using RouterOS using the routeros-api by **Denis Basta**: https://github.com/BenMenking/routeros-api/blob/master/routeros_api.class.php
+There is a simple script writen in PHP to generate PINs to connect a Hotspot, using RouterOS using the routeros-api by **Denis Basta**: https://github.com/BenMenking/routeros-api/blob/master/routeros_api.class.php without using User Manager.
 
 An Appliance with Tiny Core Linux ready-to-use (after proper configuration) is included on OVA format (VMWare) configured with Bridged network device, as the PIN generator server. (You still need your device with RouterOS).
 
