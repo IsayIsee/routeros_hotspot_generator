@@ -20,7 +20,7 @@ An Appliance with Tiny Core Linux ready-to-use (after proper configuration) is i
 
 * Set a strong password for your admin account
 
-* Create (and upload) a SSL certificate to allow login with SSL
+* Create (and upload) a SSL certificate to allow login with SSL (not mandatory but recommended)
 
 * Create a Bridge interface and add the interfaces intended to be used for the Hotspot
 
