@@ -72,7 +72,7 @@ Everything is available in the Appliance, you just need to edit **index.php** an
 
 Once the Router and Server configuration is done, you may set up the Scheduler (cron) to run the script every a certain time.
  
-#License
+##License
 
 * The scripts included in this project are licensed under the BSD 3-Clause License.
 * The Appliance included in appliance/tiny_core uses Tiny Core Linux. The contents are licensed under several licenses, including the GNU General Public License (for Tiny Core Linux and other packages), the PHP License (for PHP5), and other licenses.
