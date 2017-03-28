@@ -1,4 +1,4 @@
-# The Ultimate Hotspot PIN generator for RouterOS
+# The Ultimate standalone Hotspot PIN generator for RouterOS
 
 There is a simple script writen in PHP to generate PINs to connect a Hotspot, using RouterOS using the routeros-api by **Denis Basta**: https://github.com/BenMenking/routeros-api/blob/master/routeros_api.class.php
 
@@ -22,24 +22,35 @@ An Appliance with Tiny Core Linux ready-to-use (after proper configuration) is i
 
 ## RouterOS Scripts setup
 
-Create a new User Script in the RouterOS with the following (assuming that the Hotspot profile is called "Clients"):
+* Create a Bridge interface called "Hotspot" and add the interfaces intended to be used with it.
 
-/ip hotspot user remove [find profile=Clients];
-/ip hotspot active remove [find];
+* Add the Hotspot profile:
+
+* Install the User scripts included in the "scripts directory" from the Terminal:
+	* `system script add name=remove-clients source="/ip hotspot user remove [find profile=Clients];"`
+	* `system script add name=remove-active-clients source="/ip hotspot active remove [find];"`
+
+* Create the scheduled tasks in the router (set the 'start-time' value according to the end of the working day):
+	* `system scheduler add name=remove-clients start-time=21:00:00 interval=24h;`
+	* `system scheduler add name=remove-active-clients interval=1m;`
 
 ## PHP Scripts setup
 
 Everything is available in the Appliance, you just need to edit **index.php** and **lib/manage.sh**. If you want to install manually:
 
-* Copy **index.php** to your webserver
-* Copy **lib** anywhere outside the www access and be sure to be writable by the Webserver user
-* Edit **index.php** and set the **lib** path
-* Edit **lib/manage.sh** and:
+* Copy "index.php" to your webserver.
+* Copy "lib" anywhere outside the www access and be sure to be writable by the Webserver user, but inaccessible form the web.
+* Edit "index.php" and set the "lib" path if necessary. Is highly recommended to set it to the canonicalized absolute path.
+* Edit "lib/manage.sh" and:
  * Set the PHP/cli path shebang if necessary
  * Set the IP, User and Password of your RouterBoard admin account
- * Set the Hotspot users according to your needs (100 should be enough)
+ * Set the Hotspot users according to your needs (the default 1000 is recommended)
  * Set the Hotspot Server and Profile that you used in the Hotspot setup
 
+## Server setup
+
+Once the script is installed, you may set up the Scheduler (cron) to run the script every a certain time.
+ 
 #License
 
 * The scripts included in this project are licensed under the BSD 3-Clause License.
