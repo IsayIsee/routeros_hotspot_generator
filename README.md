@@ -48,6 +48,7 @@ An Appliance with Tiny Core Linux ready-to-use (after proper configuration) is i
 * Create the following User Scripts (set uptime according to the value set in "manage.sh"):
 
 /system script add name=remove-active-clients source="ip hotspot user remove [find where uptime>=00:30:00];"
+
 /system script add name=remove-clients source="/ip hotspot active remove [find]; /ip hotspot user remove [find profile=Clients];"
 
 * Create a Scheduled Task called remove-clients (set start-time according to the end of the working day):
