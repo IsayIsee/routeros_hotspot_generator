@@ -9,7 +9,7 @@ $mikrotik_password = '';
 
 $hotspot_server = 'hotspot1';
 $hotspot_profile = 'Clients';
-$hotspot_users = 5;
+$hotspot_users = 1000;
 $hotspot_limit_uptime = '00:30:00';
 
 // Delete the existing DB file
