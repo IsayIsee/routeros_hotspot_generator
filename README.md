@@ -51,8 +51,9 @@ An Appliance with Tiny Core Linux ready-to-use (after proper configuration) is i
 
 /system script add name=remove-clients source="/ip hotspot active remove [find]; /ip hotspot user remove [find profile=Clients];"
 
-* Create a Scheduled Task called remove-clients (set start-time according to the end of the working day):
+* Create Scheduled Tasks (set start-time according to the end of the working day):
 
+/system scheduler add name=remove-active-clients on-event=remove-active-clients interval=10m;
 /system scheduler add name=remove-clients on-event=remove-clients start-time=21:00:00 interval=24h;
 
 ### Server setup
