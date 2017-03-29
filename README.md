@@ -31,22 +31,27 @@ An Appliance with Tiny Core Linux ready-to-use (after proper configuration) is i
 * Go to IP > Hotspot, and,
 
 	* In Server tab, Create a Hotspot using the "Hotspot Setup" wizard. Check for the Profile and select the Profile (found at Server Profiles tab) set during the Hotspot Setup.
+	
+	* In Server Profiles tab open the Profile created during the Hotspot Setup, go to Login tab, and in Login By, enable only HTTP CHAP (enable HTTPS if you installed an SSL cert).
 
-	* In the User Profile tab, create a new Profile, select the Address Pool created during the Hotspot Setup (usually 'hs-pool-6'), set the Rate Limit (in bytes), and set the Session Timeout as you like (usually 00:30:00).
+	* In the User Profile tab, 
+		* Create a new User Profile using the Name difined in "manage.sh",
+		* Select the Address Pool created during the Hotspot Setup (usually 'hs-pool-6'),
+		* Set the Rate Limit (in bytes) according to your needs
+		* Set the Session Timeout as you like (usually 00:30:00)
+		* Set the Idle Timeout and Keepalive Timeout with the same value set for the Session Timeout,
+		* Disable Add MAC Cookie,
+		* In Open Status page select HTTP Login.
 
 ### RouterOS Scripts/Schedule setup
 
-* Create the following User scripts from the Terminal (use the profile defined in "manage.sh"):
+* Create a Script called remove-clients with the following contents (will remove all remaing accounts and clients connected):
 
-	* `system script add name=remove-clients source="/ip hotspot user remove [find profile=Clients];"`
+/system script add name=remove-clients source="/ip hotspot active remove [find]; /ip hotspot user remove [find profile=Clients];"
 
-	* `system script add name=remove-active-clients source="/ip hotspot active remove [find];"`
+* Create a Scheduled Task called remove-clients:
 
-* Create the following Scheduled tasks in the router (for 'remove-clients', set the 'start-time' value according to the end of the working day):
-
-	* `system scheduler add name=remove-clients start-time=21:00:00 interval=24h;`
-
-	* `system scheduler add name=remove-active-clients interval=1m;`
+/system scheduler add name=remove-clients on-event=remove-clients start-time=21:00:00 interval=24h;
 
 ### Server setup
 
