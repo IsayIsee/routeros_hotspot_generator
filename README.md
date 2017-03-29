@@ -49,7 +49,7 @@ An Appliance with Tiny Core Linux ready-to-use (after proper configuration) is i
 
 /system script add name=remove-clients source="/ip hotspot active remove [find]; /ip hotspot user remove [find profile=Clients];"
 
-* Create a Scheduled Task called remove-clients:
+* Create a Scheduled Task called remove-clients (start-time according to the end of the working day):
 
 /system scheduler add name=remove-clients on-event=remove-clients start-time=21:00:00 interval=24h;
 
