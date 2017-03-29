@@ -18,7 +18,6 @@ unlink('users.db');
 require_once('routeros_api.class.php');
 
 $ros = new RouterosAPI();
-$ros->debug = true;
 
 // Try to connect
 if ($ros->connect($mikrotik_ip, $mikrotik_user, $mikrotik_password)){
