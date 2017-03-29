@@ -45,11 +45,12 @@ An Appliance with Tiny Core Linux ready-to-use (after proper configuration) is i
 
 ### RouterOS Scripts/Schedule setup
 
-* Create a Script called remove-clients with the following contents (will remove all remaing accounts and clients connected):
+* Create the following User Scripts (set uptime according to the value set in "manage.sh"):
 
+/system script add name=remove-active-clients source="ip hotspot user remove [find where uptime>=00:30:00];"
 /system script add name=remove-clients source="/ip hotspot active remove [find]; /ip hotspot user remove [find profile=Clients];"
 
-* Create a Scheduled Task called remove-clients (start-time according to the end of the working day):
+* Create a Scheduled Task called remove-clients (set start-time according to the end of the working day):
 
 /system scheduler add name=remove-clients on-event=remove-clients start-time=21:00:00 interval=24h;
 
