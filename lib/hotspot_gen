@@ -1,0 +1,51 @@
+#!/usr/local/bin/php
+<?php
+
+// Simple script to generate randon numbers and store in a DB using SQLite
+
+$config = parse_ini_file('hotspot.conf'); // Use absolute path!!!
+
+require_once('routeros_api.class.php');
+
+if(empty($config['routeros_ip'])) die("Router Address is not set!\n");
+if(empty($config['routeros_user'])) die("Router Username is not set!!\n");
+if(empty($config['hotspot_server'])) die("Hotspotr Server is not set!!\n");
+if(empty($config['hotspot_profile'])) die("Hotspot Profile is not set!!\n");
+if(empty($config['hotspot_limit_uptime'])) die("Hotspot Uptime Limit is not set!!\n");
+if(empty($config['db_path'])) die("DB path is not set!!\n");
+
+if(!is_numeric($config['hotspot_users'])) $config['hotspot_users'] = 1000;
+$config['hotspot_users'] = ceil($config['hotspot_users']);
+
+// Create a new object for the RouterOS connection
+$ros = new RouterosAPI();
+if($config['routeros_debug'] == true) $ros->debug = true;
+
+// Try to connect
+if ($ros->connect($config['routeros_ip'], $config['routeros_user'], $config['routeros_password)'])){
+
+	// Create/open the DB file
+	if(!$db = new SQLite3($config['db_path'])) die("Unable to open the DB file!!\n");
+
+	// Delete the previous table if exists
+	$db->exec('DROP TABLE users;');
+
+	// Create the table with the fields
+	$db->exec('CREATE TABLE users (id INTEGER,pin INTEGER,used BOOL);');
+
+	// Iterate the number of desired Hotspot users
+	for($num = 0; $num < $config['hotspot_users']; $num++){
+
+		// Generate a randon PIN between consistent numbers
+		$pin = mt_rand(124871,932569);
+
+		// Insert the PIN into the DB
+		$db->exec("INSERT INTO users (id,pin,used) VALUES ($num,$pin,0);");
+
+		// Add the new Hotspot user into the RouterBoard
+		$ros->comm('/ip/hotspot/user/add',array('name'=>$pin,'profile'=>$config['hotspot_profile'],'server'=>$config['hotspot_server'],'limit-uptime'=>$config['hotspot_limit_uptime']));
+	}
+	$db->close();
+	$ros->disconnect();
+}
+?>

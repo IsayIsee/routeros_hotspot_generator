@@ -1,19 +1,24 @@
 <?php
-
 // Simple script to get a random PIN from the SQLite DB
 
-define('LIB_PATH','lib'); // Absolute path. Leave this directory outside the www access!
+$config = parse_ini_file('lib/hotspot.conf'); // Use absolute path!!!
 
 // Open the database
-$db = new SQLite3(LIB_PATH.'/users.db');
+if(!is_file($config['db_path'])) die('No database');
+
+$db = new SQLite3($config['db_path']);
 
 // Get a random field
 $result = $db->querySingle("SELECT * FROM users WHERE used = 0 ORDER BY RANDOM() LIMIT 1;",true);
 
-// Output the PIN
-echo $result['pin'];
+$id = $result['id'];
+$pin = $result['pin'];
+
+if(!empty($pin)) echo $pin;
+else die('No more PIN available');
 
 // And update the field as used
-$db->exec('UPDATE users SET used = 1 WHERE id = '. $result['id'] . ';');
+$db->exec("UPDATE users SET used = 1 WHERE id = $id");
 
+$db->close();
 ?>

@@ -58,25 +58,27 @@ An Appliance with Tiny Core Linux ready-to-use (after proper configuration) is i
 
 ### Server setup
 
-Everything is available in the Appliance, you just need to edit **index.php** and **lib/manage.sh**. If you want to install manually:
+Everything is available in the Appliance, you just need to edit "hotspot.conf". If you preffered to don't use the appliance:
 
 * Copy "index.php" to your webserver.
 
 * Copy "lib" anywhere outside the www access and be sure to be writable by the Webserver user, but inaccessible form the web.
 
-* Edit "index.php" and set the "lib" path if necessary. Is highly recommended to set it to the canonicalized absolute path.
+* Edit "index.php" and set the "hotspot.conf" path (use absolute path!!!).
 
-* Edit "lib/manage.sh" and:
+* Edit "lib/hotspot_gen" and set the "hotspot.conf" path (use absolute path!!!).
 
-	* Set the PHP/cli path shebang if necessary.
+* Edit "lib/hotspot.conf" and set the folloowing parameters:
 
-	* Set the IP, User and Password for your RouterOS admin account.
-
-	* Set $hotspot_server (string) as the Hotspot name created during the Hotspot Setup (usually 'hotspot1').
-	
-	* Set $hotspot_profile (string) as the name defined during the creation of the User profile (usually 'uprof1').
-	
-	* Set $hotspot_users according (integer) to the ammount of users who will connect during the Working Day (1000 by default)
+	* routeros_ip: the IP of the router.
+	* routeros_user: the user who will access (usually admin).
+	* routeros_password: the password for access.
+	* routeros_debug: Set it to true if you want to see the RouterOS API messages for debug purposes.
+	* hotspot_server: The Hotspot server name you created during the Hotspot Setup (usually hotspot1).
+	* hotspot_profile: The Hotspot User Profile you created (usually uprof1).
+	* hotspot_users: The maximum ammount of PIN generated as integer (the default 1000 value is usually a safe choice).
+	* hotspot_limit_uptime: The maximum connection time allowed for the consumers, in HH:mm:ss format (00:30:00 means 30 minutes, a good default choice)
+	* db_path: The SQLite DB path (use absolute path!!!)
 
 Once the Router and Server configuration is done, you may set up the Scheduler (cron) to run the script every a certain time.
  
