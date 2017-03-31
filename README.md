@@ -81,6 +81,8 @@ Everything is available in the Appliance, you just need to edit "hotspot.conf". 
 	* db_path: The SQLite DB path (use absolute path!!!)
 
 Once the Router and Server configuration is done, you may set up the Scheduler (cron) to run the script every a certain time.
+
+Important: If you're using the Tiny Core Linux appliance, don't forget to run filetool.sh in order to save the changes!
  
 ## License
 
