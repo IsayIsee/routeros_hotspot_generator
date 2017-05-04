@@ -1,3 +1,4 @@
+#!/bin/hhvm
 <?hh
 
 // Simple script to generate randon numbers and store in a DB using SQLite
