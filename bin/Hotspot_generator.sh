@@ -1,4 +1,4 @@
-#!/usr/bin/hhvm
+#!/usr/bin/hhvm -c ${HOME}/hhvm-cli.conf
 <?hh
 
 // Simple script to generate randon numbers and store in a DB using SQLite
