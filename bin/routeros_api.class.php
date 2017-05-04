@@ -1,4 +1,4 @@
-<?hh
+<?php
 /*****************************
  *
  * RouterOS PHP API class v1.6
@@ -420,3 +420,4 @@ class RouterosAPI
         $this->disconnect();
     }
 }
+?>
