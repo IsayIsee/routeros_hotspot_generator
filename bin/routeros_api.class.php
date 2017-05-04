@@ -1,4 +1,4 @@
-<?php
+<?hh
 /*****************************
  *
  * RouterOS PHP API class v1.6
