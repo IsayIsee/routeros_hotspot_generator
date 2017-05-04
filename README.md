@@ -1,18 +1,18 @@
-# The Ultimate standalone Hotspot PIN generator for RouterOS
+# The Ultimate standalone Hotspot PIN generator for RouterOS (Hack version)
 
-There is a simple script writen in PHP to generate PINs to connect a Hotspot, using RouterOS using the routeros-api by **Denis Basta**: https://github.com/BenMenking/routeros-api/blob/master/routeros_api.class.php without using User Manager.
+There is a simple script writen in Hack to generate PINs to connect a Hotspot, using RouterOS using the routeros-api by **Denis Basta**: https://github.com/BenMenking/routeros-api/blob/master/routeros_api.class.php without using User Manager.
 
 An Appliance with Tiny Core Linux ready-to-use (after proper configuration) is included on OVA format (VMWare) configured with Bridged network device, as the PIN generator server. (You still need your device with RouterOS).
 
 ## The script consist in two parts
 
-* The Backend: PHP script for console that generate random PINs, store into a SQLite DB and add them as Hotspot username into the RouterOS. This is intended to be executed daily using a cronjob. This can be easily ported to other languages using the other languages available at https://wiki.mikrotik.com/wiki/Manual:API
+* The Backend: Hack script for console that generate random PINs, store into a SQLite DB and add them as Hotspot username into the RouterOS. This is intended to be executed daily using a cronjob. This can be easily ported to other languages using the other languages available at https://wiki.mikrotik.com/wiki/Manual:API
 
-* The Frontend: PHP script (either for www and console) that queries to the DB and outputs a random PIN from it. This can also be ported to any other language that support SQLite.
+* The Frontend: Hack script (either for www and console) that queries to the DB and outputs a random PIN from it. This can also be ported to any other language that support SQLite.
 
 ## Requiriments
 
-* php 5.5 or above (both cli and cgi/fpm/apache_mod)
+* Hack 3.12 or above
 
 ## Setup
 
