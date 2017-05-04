@@ -1,4 +1,4 @@
-<?php
+<?hh
 // Simple script to get a random PIN from the SQLite DB
 
 $config = parse_ini_file('lib/hotspot.conf'); // Use absolute path!!!
@@ -21,4 +21,3 @@ else die('No more PIN available');
 $db->exec("UPDATE users SET used = 1 WHERE id = $id");
 
 $db->close();
-?>

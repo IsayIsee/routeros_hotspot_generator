@@ -1,4 +1,4 @@
-<?php
+<?hh // decl
 /*****************************
  *
  * RouterOS PHP API class v1.6
@@ -17,16 +17,16 @@
 
 class RouterosAPI
 {
-    var $debug     = false; //  Show debug information
-    var $connected = false; //  Connection state
-    var $port      = 8728;  //  Port to connect to
-    var $timeout   = 3;     //  Connection attempt timeout and data read timeout
-    var $attempts  = 5;     //  Connection attempt count
-    var $delay     = 3;     //  Delay between connection attempts in seconds
+    public $debug     = false; //  Show debug information
+    public $connected = false; //  Connection state
+    public $port      = 8728;  //  Port to connect to
+    public $timeout   = 3;     //  Connection attempt timeout and data read timeout
+    public $attempts  = 5;     //  Connection attempt count
+    public $delay     = 3;     //  Delay between connection attempts in seconds
 
-    var $socket;            //  Variable for storing socket resource
-    var $error_no;          //  Variable for storing connection error number, if any
-    var $error_str;         //  Variable for storing connection error text, if any
+    public $socket;            //  Variable for storing socket resource
+    public $error_no;          //  Variable for storing connection error number, if any
+    public $error_str;         //  Variable for storing connection error text, if any
 
     /* Check, can be var used in foreach  */
     public function isIterable($var)
@@ -420,4 +420,3 @@ class RouterosAPI
         $this->disconnect();
     }
 }
-?>
