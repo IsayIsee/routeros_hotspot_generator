@@ -1,5 +1,5 @@
-#!/usr/bin/hhvm -c ${HOME}/hhvm-cli.conf
-<?hh
+#!/usr/bin/php
+<?php
 
 // Simple script to generate randon numbers and store in a DB using SQLite
 
@@ -48,3 +48,4 @@ if ($ros->connect($config['routeros_ip'], $config['routeros_user'], $config['rou
 	$db->close();
 	$ros->disconnect();
 }
+?>
