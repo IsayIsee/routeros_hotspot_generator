@@ -22,7 +22,7 @@ $ros = new RouterosAPI();
 if($config['routeros_debug'] == true) $ros->debug = true;
 
 // Try to connect
-if ($ros->connect($config['routeros_ip'], $config['routeros_user'], $config['routeros_password)'])){
+if ($ros->connect($config['routeros_ip'], $config['routeros_user'], $config['routeros_password'])){
 
 	// Create/open the DB file
 	if(!$db = new SQLite3($config['db_path'])) die("Unable to open the DB file!!\n");
