@@ -19,7 +19,8 @@ class RouterosAPI
 {
     var $debug     = false; //  Show debug information
     var $connected = false; //  Connection state
-    var $port      = 8728;  //  Port to connect to
+    var $port      = 8728;  //  Port to connect to (default 8729 for ssl)
+    var $ssl       = false; //  Connect using SSL (must enable api-ssl in IP/Services)
     var $timeout   = 3;     //  Connection attempt timeout and data read timeout
     var $attempts  = 5;     //  Connection attempt count
     var $delay     = 3;     //  Delay between connection attempts in seconds
@@ -95,23 +96,36 @@ class RouterosAPI
     {
         for ($ATTEMPT = 1; $ATTEMPT <= $this->attempts; $ATTEMPT++) {
             $this->connected = false;
-            $this->debug('Connection attempt #' . $ATTEMPT . ' to ' . $ip . ':' . $this->port . '...');
-            $this->socket = @fsockopen($ip, $this->port, $this->error_no, $this->error_str, $this->timeout);
+            $PROTOCOL = ($this->ssl ? 'ssl://' : '' );
+            $context = stream_context_create(array('ssl' => array('ciphers' => 'ADH:ALL', 'verify_peer' => false, 'verify_peer_name' => false)));
+            $this->debug('Connection attempt #' . $ATTEMPT . ' to ' . $PROTOCOL . $ip . ':' . $this->port . '...');
+            $this->socket = @stream_socket_client($PROTOCOL . $ip.':'. $this->port, $this->error_no, $this->error_str, $this->timeout, STREAM_CLIENT_CONNECT,$context);
             if ($this->socket) {
                 socket_set_timeout($this->socket, $this->timeout);
-                $this->write('/login');
+                $this->write('/login', false);
+                $this->write('=name=' . $login, false);
+                $this->write('=password=' . $password);
                 $RESPONSE = $this->read(false);
-                if (isset($RESPONSE[0]) && $RESPONSE[0] == '!done') {
-                    $MATCHES = array();
-                    if (preg_match_all('/[^=]+/i', $RESPONSE[1], $MATCHES)) {
-                        if ($MATCHES[0][0] == 'ret' && strlen($MATCHES[0][1]) == 32) {
-                            $this->write('/login', false);
-                            $this->write('=name=' . $login, false);
-                            $this->write('=response=00' . md5(chr(0) . $password . pack('H*', $MATCHES[0][1])));
-                            $RESPONSE = $this->read(false);
-                            if ($RESPONSE[0] == '!done') {
-                                $this->connected = true;
-                                break;
+                if (isset($RESPONSE[0])) {
+                    if ($RESPONSE[0] == '!done') {
+                        if (!isset($RESPONSE[1])) {
+                            // Login method post-v6.43
+                            $this->connected = true;
+                            break;
+                        } else {
+                            // Login method pre-v6.43
+                            $MATCHES = array();
+                            if (preg_match_all('/[^=]+/i', $RESPONSE[1], $MATCHES)) {
+                                if ($MATCHES[0][0] == 'ret' && strlen($MATCHES[0][1]) == 32) {
+                                    $this->write('/login', false);
+                                    $this->write('=name=' . $login, false);
+                                    $this->write('=response=00' . md5(chr(0) . $password . pack('H*', $MATCHES[0][1])));
+                                    $RESPONSE = $this->read(false);
+                                    if (isset($RESPONSE[0]) && $RESPONSE[0] == '!done') {
+                                        $this->connected = true;
+                                        break;
+                                    }
+                                }
                             }
                         }
                     }
@@ -420,4 +434,3 @@ class RouterosAPI
         $this->disconnect();
     }
 }
-?>
